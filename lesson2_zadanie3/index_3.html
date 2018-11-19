@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="gallery-wrap"></div>
+    <!--
+    let template = `
+    <div id="${this.settings.id}" class="modal-wrap">
+       <div class="top-block">
+           <button type="button" class="${this.settings.btn}" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       </div>
+       <div class="${this.settings.imgWrap}"></div>    
+    </div>`;
+    !-->
+</body>
+<script src="gallery.js"></script>
+<script>
+    window.onload = () => {
+        let gall = new Gallery('gallery.json', '.gallery-wrap');
+    }
+</script>
+</html>

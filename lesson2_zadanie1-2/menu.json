@@ -1,0 +1,15 @@
+{
+   "menu_items" : [
+	   {"href" : "/pic1.jpg", "title" : "Главная"},
+	   {"href" : "/gallery/", "title" : "Галерея"},
+       {"href" : "/promo/", "title" : "Промоакции"},
+	   {"href" : "/catalogue/", "title" : "Каталог"},
+       [
+           {"href" : "/sdcfasd/", "title" : "Товар1"},
+           {"href" : "/sdcfasd/", "title" : "Товар2"},
+           {"href" : "/sdcfasd/", "title" : "Товар3"},
+           {"href" : "/sdcfasd/", "title" : "Товар4"}
+       ],
+	   {"href" : "/sdcfasd/", "title" : "Личный кабинет"}
+   ]
+}
