@@ -1,5 +1,7 @@
+// Глобальные переменные
 var
     nameElement = document.getElementById('form__name'),
+    birthdayElement = document.getElementById('form__birthday'),
     phoneElement = document.getElementById('form__phone'),
     emailElement = document.getElementById('form__email'),
     textElement = document.getElementById('form__text'),
@@ -13,11 +15,12 @@ var
  Container.prototype.render = function() {
     return this.htmlCode;
 };
- function Form(myId, myClass, myName, myPhone, myEmail, myText, myTown) {
+ function Form(myId, myClass, myName, myBirthday, myPhone, myEmail, myText, myTown) {
     Container.call(this);
     this.id = myId;
     this.className = myClass;
     this.name = myName;
+    this.birthday = myBirthday;
     this.phone = myPhone;
     this.email = myEmail;
     this.text = myText;
@@ -28,6 +31,7 @@ Form.prototype.constructor = Form;
  // Вставка значений в поля формы
 Form.prototype.fill = function() {
     nameElement.value = this.name;
+    birthdayElement.value = this.birthday;
     phoneElement.value = this.phone;
     emailElement.value = this.email;
     textElement.value = this.text;
@@ -46,6 +50,10 @@ Form.prototype.validate = function(myIds, myTypes) {
                 // Имя, минимум 2 буквы
                 reg = /^([A-zА-я]+){2}$/;
                 break;
+            case "birthday":
+                // Дата ДД.ММ.ГГГГ
+                reg = /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/;
+                break;
             case "phone":
                 // +7|8(000)000-0000
                 reg = /^\+[7|8]{1}\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/;
@@ -53,6 +61,10 @@ Form.prototype.validate = function(myIds, myTypes) {
             case "email":
                 // mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru
                 reg = /^([A-zА-я0-9_-]+\.)*[A-zА-я0-9_-]+@[A-zА-я0-9_-]+(\.[A-zА-я0-9_-]+)*\.[A-zА-я]{2,6}$/;
+                break;
+            case "town":
+                // Город
+                reg = /^([A-zА-я-\s]+){2}$/;
                 break;
             case "text":
                 // Текст, минимум 10 символов
@@ -62,7 +74,9 @@ Form.prototype.validate = function(myIds, myTypes) {
          if (field.value.search(reg) == -1) {
             check = false;
             field.style.borderColor = '#c750ac';
+            $('#'+field.id).effect("bounce", { times: 3 }, "slow");
             message.innerHTML = 'Проверьте правильность заполнения поля!';
+            $('#'+message.id).effect("bounce", { times: 3 }, "slow");
         } else {
             field.style.borderColor = '#85c799';
             message.innerHTML = '';
@@ -72,7 +86,7 @@ Form.prototype.validate = function(myIds, myTypes) {
  // Загрузка информации в поля формы из файла JSON через AJAX
 document.getElementById('form__button-load').onclick = function() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './Zadanie_4.2-1.json', true);
+    xhr.open('GET', './DZ_lesson6_data.json', true);
     xhr.send();
      xhr.onreadystatechange = function() {
         if (xhr.readyState != 4) return;
@@ -82,6 +96,7 @@ document.getElementById('form__button-load').onclick = function() {
             var fileJson = JSON.parse(xhr.responseText),
                 formNew = new Form('formId', 'formClass',
                 fileJson.name,
+                fileJson.birthday,
                 fileJson.phone,
                 fileJson.email,
                 fileJson.text,
@@ -95,17 +110,18 @@ document.getElementById('form').onsubmit = function(e) {
     check = true;
     var formNew = new Form('formId', 'formClass',
         nameElement.value,
+        birthdayElement.value,
         phoneElement.value,
         emailElement.value,
         textElement.value,
         townElement.value);
-    formNew.validate('form__input', ['name', 'phone', 'email', 'text']);
+    formNew.validate('form__input', ['name', 'birthday', 'phone', 'email', 'text', 'town']);
     (!check) ? e.preventDefault() : alert('Форма успешно отправлена!');
 };
  // Загрузка списка городов из файла JSON в массив для автозаполнения через jQuery UI
 window.onload = function() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './Zadanie_4.2-2.json', true);
+    xhr.open('GET', './DZ_lesson6_towns.json', true);
     xhr.send();
      xhr.onreadystatechange = function() {
         if (xhr.readyState != 4) return;
@@ -120,4 +136,13 @@ window.onload = function() {
             })
          }
     }
-}
+     // Дата рождения
+    $('#form__birthday').datepicker({
+        dateFormat: 'dd.mm.yy',
+        dayNamesMin: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+        monthNames: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
+        yearRange: '1900:2017',
+        changeYear: true,
+        firstDay: 1
+    });
+ }

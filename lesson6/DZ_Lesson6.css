@@ -35,7 +35,7 @@ body, form, input, textarea {
 	background: #FFFFFF;
 	width: 100%;
 	min-height: 100px;
-	height: calc(100vh - 470px);
+	height: calc(100vh - 520px);
 	border: rgba(0, 0, 0, .3) 1px solid;
 	padding: 10px;
 	margin-top: 10px;
