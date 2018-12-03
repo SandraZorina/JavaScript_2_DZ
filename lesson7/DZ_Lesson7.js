@@ -86,7 +86,7 @@ Form.prototype.validate = function(myIds, myTypes) {
  // Загрузка информации в поля формы из файла JSON через AJAX
 document.getElementById('form__button-load').onclick = function() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './DZ_lesson6_data.json', true);
+    xhr.open('GET', './DZ_Lesson7_data.json', true);
     xhr.send();
      xhr.onreadystatechange = function() {
         if (xhr.readyState != 4) return;
@@ -121,7 +121,7 @@ document.getElementById('form').onsubmit = function(e) {
  // Загрузка списка городов из файла JSON в массив для автозаполнения через jQuery UI
 window.onload = function() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './DZ_lesson6_towns.json', true);
+    xhr.open('GET', './DZ_Lesson7_towns.json', true);
     xhr.send();
      xhr.onreadystatechange = function() {
         if (xhr.readyState != 4) return;
@@ -145,4 +145,4 @@ window.onload = function() {
         changeYear: true,
         firstDay: 1
     });
- }
+ };
